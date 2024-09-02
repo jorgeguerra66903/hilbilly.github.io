@@ -47,24 +47,21 @@
             font-size: 1.2rem;
         }
 
-        .title {
-            font-weight: bold;
-            font-size: 2rem;
-            font-family: 'Poetsen One', sans-serif;
-            margin-bottom: 20px;
-            text-align: center;
+        .form-control::placeholder {
+            color: #ffffff;
         }
 
-        .form-control::placeholder {
-            color: #ffffff; /* Cambia este valor al color que desees para el placeholder */
+        .navbar .dropdown-menu-end {
+            right: 0;
+            left: auto;
         }
     </style>
 </head>
-<body>         
+<body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <img src="pipi.png" width="70" height="70">
+                <img src="pipi.png" width="70" height="70" alt="Logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -73,54 +70,125 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Calculadoras
+                            <span data-lang-key="calculators">Calculadoras</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="calculadora.html">Calculadora de Crafteo</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="mercado.html">Calculadora de Comisiones Mercado</a>
-                            </li>
+                            <li><a class="dropdown-item" href="calculadora.html" data-lang-key="crafting-calculator">Calculadora de Crafteo</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="mercado.html" data-lang-key="market-commission-calculator">Calculadora de Comisiones Mercado</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Información
+                            <span data-lang-key="information">Información</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="eventos.html">Eventos Semanales</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="horarios.html">Horarios de Jefes</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                            <li><a class="dropdown-item" href="eventos.html" data-lang-key="weekly-events">Eventos Semanales</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="horarios.html" data-lang-key="boss-schedules">Horarios de Jefes</a></li>
                         </ul>
                     </li>
                 </ul>
-          </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="current-language">
+                            <img src="Bandera_argentina.webp" width="45" height="45" alt="Bandera Argentina"> ARG
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" onclick="changeLanguage('es-AR', 'Bandera_argentina.webp', 'ARG')"><img src="Bandera_argentina.webp" width="45" height="45" alt=""> ARG - Argentino</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="changeLanguage('es', 'Bandera_española.webp', 'ESP')"><img src="Bandera_española.webp" width="45" height="45" alt="Bandera Española"> ESP - Español</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="changeLanguage('en-US', 'Bandera_eeuu.webp', 'ENG')"><img src="Bandera_eeuu.webp" width="45" height="45" alt="Bandera Estados Unidos"> ENG - English (US)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="changeLanguage('pt-BR', 'Bandera_brasileña.webp', 'BR')"><img src="Bandera_brasileña.webp" width="45" height="45" alt="Bandera Brasil"> BR - Português (Brasil)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="changeLanguage('zh-CN', 'Bandera_china.webp', 'CN')"><img src="Bandera_china.webp" width="45" height="45" alt="Bandera China"> CN - 中文 (中国)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <div class="container-box">
-        <div class="title">CONOCÉ LA COMISIÓN QUE TE COBRARÁ EL MERCADO</div>
+        <div class="title" data-lang-key="commission-title">CONOCÉ LA COMISIÓN QUE TE COBRARÁ EL MERCADO</div>
         <div class="mb-3">
-            <label for="itemValue" class="form-label">Valor de tu artículo:</label>
+            <label for="itemValue" class="form-label" data-lang-key="item-value-label">Valor de tu artículo:</label>
             <input type="number" class="form-control" id="itemValue" placeholder="Ingresa el valor" oninput="calculateCommission()">
         </div>
-        <div id="result" class="result"></div>
+        <div id="result" class="result" data-lang-key="result-label"></div>
     </div>
 
     <script>
+        let currentLang = 'es-AR'; // Idioma por defecto
+
+        const translations = {
+            "es-AR": {
+                "calculators": "Calculadoras",
+                "crafting-calculator": "Calculadora de Crafteo",
+                "market-commission-calculator": "Calculadora de Comisiones Mercado",
+                "information": "Información",
+                "weekly-events": "Eventos Semanales",
+                "boss-schedules": "Horarios de Jefes",
+                "commission-title": "CONOCÉ LA COMISIÓN QUE TE COBRARÁ EL MERCADO",
+                "item-value-label": "Valor de tu artículo:",
+                "result-label": "La comisión será de:",
+            },
+            "es": {
+                "calculators": "Calculadoras",
+                "crafting-calculator": "Calculadora de Crafteo",
+                "market-commission-calculator": "Calculadora de Comisiones Mercado",
+                "information": "Información",
+                "weekly-events": "Eventos Semanales",
+                "boss-schedules": "Horarios de Jefes",
+                "commission-title": "CONOCÉ LA COMISIÓN QUE TE COBRARÁ EL MERCADO",
+                "item-value-label": "Valor de tu artículo:",
+                "result-label": "La comisión será de:",
+            },
+            "en-US": {
+                "calculators": "Calculators",
+                "crafting-calculator": "Crafting Calculator",
+                "market-commission-calculator": "Market Commission Calculator",
+                "information": "Information",
+                "weekly-events": "Weekly Events",
+                "boss-schedules": "Boss Schedules",
+                "commission-title": "KNOW THE MARKET COMMISSION YOU WILL BE CHARGED",
+                "item-value-label": "Item Value:",
+                "result-label": "The commission will be:",
+            },
+            "pt-BR": {
+                "calculators": "Calculadoras",
+                "crafting-calculator": "Calculadora de Crafteo",
+                "market-commission-calculator": "Calculadora de Comissões Mercado",
+                "information": "Informações",
+                "weekly-events": "Eventos Semanais",
+                "boss-schedules": "Horários dos Chefes",
+                "commission-title": "SAIBA A COMISSÃO QUE O MERCADO VAI COBRAR",
+                "item-value-label": "Valor do item:",
+                "result-label": "A comissão será:",
+            },
+            "zh-CN": {
+                "calculators": "计算器",
+                "crafting-calculator": "制作计算器",
+                "market-commission-calculator": "市场佣金计算器",
+                "information": "信息",
+                "weekly-events": "每周活动",
+                "boss-schedules": "Boss 时间表",
+                "commission-title": "了解市场收取的佣金",
+                "item-value-label": "物品价值：",
+                "result-label": "佣金为：",
+            }
+        };
+
+        function changeLanguage(langCode, flag, langName) {
+            currentLang = langCode;
+            document.getElementById('current-language').innerHTML = `<img src="${flag}" width="45" height="45" alt="${langName}"> ${langName}`;
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                el.textContent = translations[langCode][key] || el.textContent;
+            });
+            // Update the result text after language change
+            calculateCommission();
+        }
+
         function calculateCommission() {
             const itemValue = parseInt(document.getElementById('itemValue').value);
             let commission = 1;  // Comienza con la comisión mínima de 1
@@ -130,8 +198,8 @@
             }
 
             const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `La comisión será de: ${commission}`;
+            resultDiv.textContent = `${translations[currentLang]["result-label"]} ${commission}`;
         }
-    </script>                
+    </script>
 </body>
 </html>
